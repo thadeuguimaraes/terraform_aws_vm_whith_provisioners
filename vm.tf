@@ -1,12 +1,6 @@
-resource "aws_key_pair" "key" {
-  key_name   = "aws-key"
-  public_key = file("./aws-key.pub")
-}
-
 resource "aws_instance" "vm" {
-  ami                         = "ami-0d527b8c289b4af7f"
+  ami                         = "ami-0b5eea76982371e91"
   instance_type               = "t2.micro"
-  key_name                    = aws_key_pair.key.key_name
   subnet_id                   = data.terraform_remote_state.vpc.outputs.subnet_id
   vpc_security_group_ids      = [data.terraform_remote_state.vpc.outputs.security_group_id]
   associate_public_ip_address = true
@@ -27,8 +21,8 @@ resource "aws_instance" "vm" {
 
   connection {
     type        = "ssh"
-    user        = "ubuntu"
-    private_key = file("./aws-key")
+    user        = "linux"
+    private_key = file("./dck-1.pem")
     host        = self.public_ip
   }
 

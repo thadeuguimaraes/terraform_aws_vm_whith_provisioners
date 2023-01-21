@@ -5,23 +5,23 @@ terraform {
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = "3.73.0"
+      version = "4.49.0"
     }
   }
 
   backend "s3" {
-    bucket = "danielgil-remote-state"
+    bucket = "matrix-remote-state"
     key    = "aws-vm-provisioners/terraform.tfstate"
-    region = "eu-central-1"
+    region = "us-east-1"
   }
 }
 
 provider "aws" {
-  region = "eu-central-1"
+  region = "us-east-1"
 
   default_tags {
     tags = {
-      owner      = "danielgil"
+      owner      = "thadeu"
       managed-by = "terraform"
     }
   }
@@ -30,8 +30,8 @@ provider "aws" {
 data "terraform_remote_state" "vpc" {
   backend = "s3"
   config = {
-    bucket = "danielgil-remote-state"
+    bucket = "matrix-remote-state"
     key    = "aws-vpc/terraform.tfstate"
-    region = "eu-central-1"
+    region = "us-east-1"
   }
 }
